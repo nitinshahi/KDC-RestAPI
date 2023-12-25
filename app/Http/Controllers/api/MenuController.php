@@ -17,8 +17,7 @@ class MenuController extends Controller
     {   
         $menu = Menu::all();
         return response()->json([
-            'status' => 200,
-            'message' => $menu
+            'data' => $menu
         ],200);
     }
 
@@ -49,17 +48,17 @@ class MenuController extends Controller
                 'cook_time' => $request->cook_time,
                 'populatiy' => $request->populatiy
             ]);
-            
+            // Menu::create($request);
 
             return response()->json([
-                'status' => 200,
+                'status' => "sucess!!",
                 'message' => 'Menu Added Sucessfully!'
             ],200);
 
         } catch (\Exception $e) {
             //Return Json Response
             return response()->json([
-                'status' => 500,
+                'status' => "failed!!",
                 'messge' => "Something Went Wrong"
             ],500);
         }
@@ -73,12 +72,12 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         if(!$menu){
             return response()->json([
+                'status' => "failed!!",
                 'message' => 'Item not found!!'
             ],404);
         }
         
         return response()->json([
-                'status' => 200,
                 'message' => $menu
             ],200);
     }
@@ -91,13 +90,12 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         if(!$menu){
             return response()->json([
-                'status' => 404,
+                'status' => "failed!!",
                 'message' => 'Item not found!!'
             ],404);
         }
         
         return response()->json([
-                'status' => 200,
                 'message' => $menu
             ],200);
     }
@@ -111,7 +109,7 @@ class MenuController extends Controller
             $menu = Menu::find($id);
             if(!$menu){
                 return response()->json([
-                    'status' => 404,
+                    'status' => "failed!!",
                     'message' => 'Item not found!!'
                 ],404);
             }
@@ -132,14 +130,14 @@ class MenuController extends Controller
             $menu->save();
 
             return response()->json([
-                'status' => 200,
+                'status' => "sucess!!",
                 'message' => "Item updated Sucessfully!!!"
             ],200);
 
         } catch (\Exception $e) {
             //Return Json Response
             return response()->json([
-                'status' => 500,
+                'status' => "failed!!",
                 'messge' => "Something Went Wrong"
             ],500);
         }
@@ -153,7 +151,7 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         if(!$menu){
             return response()->json([
-                'status' => 404,
+                'status' => "failed!!",
                 'message' => 'Item not found!!'
             ],404);
         }
@@ -162,7 +160,7 @@ class MenuController extends Controller
         }
         $menu->delete();
         return response()->json([
-            'status' => 200,
+                'status' => "sucess!!",
             'message' => "Item deleted Sucessfully!!!"
         ],200); 
     }
