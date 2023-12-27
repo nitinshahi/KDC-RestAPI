@@ -2,16 +2,20 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class MessageStoreRequest extends FormRequest
 {
+    
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,12 +25,12 @@ class MessageStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        if(request()->isMethod('POST')){
+        if(request()->isMethod('post')){
             return[
                 'name' => 'required',
                 'email' => 'required',
                 'phone' => 'nullable',
-                'your_message' => 'required'
+                'description' => 'required'
             ];
         }
     }
@@ -35,8 +39,23 @@ class MessageStoreRequest extends FormRequest
             return[
                 'name.required' => 'Name is Required!!',
                 'email.required' => 'email is Required!!',
-                'your_message.required' => 'your_message is Required!!',
+                'description.required' => 'description is Required!!'
             ];
         }
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(ValidationValidator $validator)
+    {
+
+        $response = new Response(['error' => $validator->errors()], 422);
+        throw new ValidationException($validator, $response);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\MenuController;
+use App\Http\Controllers\api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('/menu',MenuController::class);
+Route::post('/contactus',[MessageController::class, 'store']);

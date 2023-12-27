@@ -13,9 +13,10 @@ class MessageController extends Controller
     }
 
     public function store(MessageStoreRequest $request){
+        // return $request;
         try 
         {
-            Message::create($request);
+            Message::create($request->all());
             return response()->json([
                 'status' => "sucess!!",
                 'message' => 'Message Added Sucessfully!'
@@ -24,7 +25,8 @@ class MessageController extends Controller
             //Return Json Response
             return response()->json([
                 'status' => "failed!!",
-                'messge' => "Something Went Wrong!!!"
+                // 'messge' => "Something Went Wrong!!!"
+                'message' => $e->getMessage()
             ],500);
         }
     }
