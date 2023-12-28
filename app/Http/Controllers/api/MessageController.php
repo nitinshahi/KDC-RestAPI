@@ -9,7 +9,11 @@ use App\Http\Requests\MessageStoreRequest;
 class MessageController extends Controller
 {
     public function index(){
-        //code...
+        $message = Message::all();
+        return response()->json([
+                'status' => "sucess!!",
+                'data' => $message
+            ],200);
     }
 
     public function store(MessageStoreRequest $request){
